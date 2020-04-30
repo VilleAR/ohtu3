@@ -1,7 +1,9 @@
 package ohtu;
 
+import java.util.ArrayList;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.Collections;
 import org.apache.http.client.fluent.Request;
 
 public class Main {
@@ -10,16 +12,33 @@ public class Main {
         
         String bodyText = Request.Get(url).execute().returnContent().asString();
                 
-        System.out.println("json-muotoinen data:");
-        System.out.println( bodyText );
+        
 
         Gson mapper = new Gson();
         Player[] players = mapper.fromJson(bodyText, Player[].class);
-        
-        System.out.println("Oliot:");
+        ArrayList<Player> finp = new ArrayList<Player>();
+        System.out.println("Players from FIN:");
         for (Player player : players) {
-            System.out.println(player);
+            if (player.getNationality().equals("FIN")) {
+                finp.add(player);
+                //System.out.println(player.getPoints()); 
+            }        
         }   
+        int max = 0;
+        for (Player p : finp) {
+            if (p.getPoints()>max) {
+                max=p.getPoints();               
+            }
+        }
+        while (max>=0) {
+            for (Player p1 : finp) {
+                if (p1.getPoints()==max) {
+                    System.out.println(p1.getName() + " " + p1.getPoints());
+                }
+            }
+            max--;
+        }
+        
     }
   
 }
