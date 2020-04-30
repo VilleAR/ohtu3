@@ -1,8 +1,16 @@
+plugins {
+  id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
 apply plugin: 'java'
 apply plugin: 'application'
 
 mainClassName = 'ohtu.Main'
-
+shadowJar {
+   baseName = 'shadow'
+   classifier = ''
+   archiveVersion = ''
+}
 jar {
     manifest {
         attributes 'Main-Class': 'ohtu.Main'
